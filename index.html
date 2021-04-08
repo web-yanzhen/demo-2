@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .container{
+            width: 1000px;
+            min-height: 100px;
+            border: solid 1px #ddd;
+            position: relative;
+        }
+       
+        .container .move{
+            height: 200px;
+            width: 200px;
+            border:solid 10px #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px #000;
+        }
+        .move img{
+           position: absolute;
+           top: 0;
+           left: 0;
+        }
+        /* .hidden{
+            opacity: 50%;
+        } */
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+       <img src="mrzh.jpg" width="100%" alt="">
+       <div class="move">
+           <img src="mrzh.jpg" alt="">
+       </div>
+    </div>
+
+    <script>
+        // 获取元素
+        var container = document.querySelector('.container');
+        var move = document.querySelector('.move');
+        var bigImg = document.querySelector('.move img');
+
+        // container.onmouseover = function(){
+        //     move.classList.add('hidden');
+        // };
+       
+        // container.onmouseout = function(){
+        //     move.classList.remove('hidden');
+        // };
+
+        // 绑定container的鼠标移动事件
+        container.onmouseover = function(e){
+             // 获取鼠标距离左侧的偏移量
+            var x = e.clientX;
+            // 获取contianer距离左侧的偏移量
+            var l = container.offsetLeft;
+            // 计算最终的left值
+            var moveLeft = x - l - move.offsetWidth/2;
+            // 边界检测
+            if(moveLeft <= 0){
+                moveLeft = 0
+            };
+            var maxLeft = container.offsetWidth - move.offsetWidth;
+            if(moveLeft >= maxLeft){
+                moveLeft = maxLeft
+            };
+            // 设置样式
+            move.style.left = moveLeft + 'px';
+            // 计算大图的left值
+            var bigImgLeft = (moveLeft + move.offsetWidth/2)/container.offsetWidth * bigImg.offsetWidth - move.offsetWidth/2;
+            // 设置大图样式
+            bigImg.style.left = -bigImgLeft + 'px';
+
+             // 获取鼠标距离上侧的偏移量
+             var y = e.clientY;
+            // 获取contianer距离上侧的偏移量
+            var t = container.offsetTop;
+            // 计算最终的left值
+            var moveTop = y - t - move.offsetHeight/2;
+            // 边界检测
+            if(moveTop <= 0){
+                moveTop = 0
+            };
+            var maxTop = container.offsetHeight - move.offsetHeight;
+            if(moveTop  >= maxTop ){
+                moveTop  = maxTop 
+            };
+            // 设置样式
+            move.style.top = moveTop  + 'px';
+            // 计算大图的top值
+            var bigImgTop = (moveTop  + move.offsetHeight/2)/container.offsetHeight * bigImg.offsetHeight - move.offsetHeight/2;
+            // 设置大图样式
+            bigImg.style.top = -bigImgTop + 'px';
+
+        }
+       
+      
+        
+    </script>
+</body>
+</html>
